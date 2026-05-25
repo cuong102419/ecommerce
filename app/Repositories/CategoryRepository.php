@@ -6,7 +6,7 @@ use App\Models\Category;
 
 class CategoryRepository {
     public function getAll() {
-        return Category::all();
+        return Category::latest()->paginate(10);
     }
 
     public function create($data = []) {
