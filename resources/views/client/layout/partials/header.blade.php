@@ -30,6 +30,9 @@
                                             class="fas fa-user"></i></a>
                                     <div class="dropdown-menu">
                                         @if (Auth::user())
+                                            @if (Auth::user()->role === 'admin')
+                                                <a class="dropdown-item text-secondary" href="{{ route('dashboard') }}">Trang quản trị</a>
+                                            @endif
                                             <a class="dropdown-item text-secondary" href="">Tài khoản</a>
                                             <form action="{{ route('logout') }}" method="post">
                                                 @csrf

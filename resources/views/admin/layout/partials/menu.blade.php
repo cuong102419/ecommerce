@@ -2,7 +2,7 @@
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
+        <a href="{{ route('dashboard') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
                 <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -47,7 +47,7 @@
                     </g>
                 </svg>
             </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">Fruitkha</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -61,14 +61,33 @@
         <!-- Dashboard -->
         <li class="menu-item">
             <a href="index.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bx-tachometer"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
         <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-category"></i>
+                <div data-i18n="Layouts">Danh mục</div>
+            </a>
+            
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ route('categories') }}" class="menu-link">
+                        <div data-i18n="Without navbar">Danh sách</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('categories.create') }}" class="menu-link">
+                        <div data-i18n="Without menu">Tạo mới</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
             <a href="index.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Users</div>
+                <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                <div data-i18n="Analytics">Người dùng</div>
             </a>
         </li>
         <!-- Layouts -->
@@ -106,7 +125,12 @@
                 </li>
             </ul>
         </li>
-
+        <li class="menu-item">
+            <a href="{{ route('home') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-log-out"></i>
+                <div data-i18n="Analytics">Về trang chủ</div>
+            </a>
+        </li>
     </ul>
 </aside>
 <!-- / Menu -->
