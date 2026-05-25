@@ -23,6 +23,8 @@ Route::middleware(['auth', 'check.role'])->prefix('admin')->group((function() {
         Route::get('/', [CategoryController::class, 'index'])->name('categories');
         Route::get('/create', [CategoryController::class,'create'])->name('categories.create');
         Route::post('/create', [CategoryController::class,'store'])->name('categories.store');
+        Route::get('/edit/{category}', [CategoryController::class,'edit'])->name('categories.edit');
+        Route::put('/update/{category}', [CategoryController::class,'update'])->name('categories.update');
     }));
 }));
 

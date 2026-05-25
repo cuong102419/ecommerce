@@ -21,7 +21,7 @@ class RegisterController extends Controller
     }
 
     public function register(RegisterRequest $request) {
-        $user = $this->userRepository->create($request->all());
+        $this->userRepository->create($request->validated());
 
         return redirect()->route('login');
     }

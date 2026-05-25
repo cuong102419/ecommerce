@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Repositories\CategoryRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -26,7 +25,18 @@ class CategoryController extends Controller
     }
 
     public function store(StoreCategoryRequest $request) {
-        $this->categoryRepository->create($request->all());
+        $this->categoryRepository->create($request->validated());
+        return redirect()->route('categories');
+    }
+
+    public function edit($slug) {
+        $category = $this->categoryRepository->getBySlug($slug);
+        return view('admin.categories.edit', compact('category'));
+    }
+
+    public function update(UpdateCategoryRequest $request, $category) {
+        // dd($category);  
+        $this->categoryRepository->update($category, $request->validated());
         return redirect()->route('categories');
     }
 }
