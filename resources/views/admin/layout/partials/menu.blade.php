@@ -60,7 +60,7 @@
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-tachometer"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
@@ -79,6 +79,25 @@
                 </li>
                 <li class="menu-item">
                     <a href="{{ route('categories.create') }}" class="menu-link">
+                        <div data-i18n="Without menu">Tạo mới</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-package"></i>
+                <div data-i18n="Layouts">Sản phẩm</div>
+            </a>
+            
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ route('admin.products') }}" class="menu-link">
+                        <div data-i18n="Without navbar">Danh sách</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('admin.products.create') }}" class="menu-link">
                         <div data-i18n="Without menu">Tạo mới</div>
                     </a>
                 </li>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +23,15 @@ Route::middleware(['auth', 'check.role'])->prefix('admin')->group((function() {
     Route::prefix('/categories')->group((function() {
         Route::get('/', [CategoryController::class, 'index'])->name('categories');
         Route::get('/create', [CategoryController::class,'create'])->name('categories.create');
-        Route::post('/create', [CategoryController::class,'store'])->name('categories.store');
+        Route::post('/store', [CategoryController::class,'store'])->name('categories.store');
         Route::get('/edit/{category}', [CategoryController::class,'edit'])->name('categories.edit');
         Route::put('/update/{category}', [CategoryController::class,'update'])->name('categories.update');
+    }));
+
+    Route::prefix('products')->group((function() {
+        Route::get('/', [AdminProductController::class, 'index'])->name('admin.products');
+        Route::get('/create', [AdminProductController::class,'create'])->name('admin.products.create');
+        Route::post('/store', [AdminProductController::class,'store'])->name('admin.products.store');
     }));
 }));
 

@@ -10,7 +10,7 @@
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th>STT</th>
                         <th>Danh mục</th>
                         <th>Đường dẫn</th>
@@ -19,7 +19,7 @@
                 </thead>
                 <tbody class="table-border-bottom-0">
                     @foreach ($categories as $index => $category)
-                        <tr>
+                        <tr class="text-center">
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->slug }}</td>
