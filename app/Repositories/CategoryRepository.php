@@ -13,6 +13,10 @@ class CategoryRepository {
         return Category::where("slug","=", $slug)->first();
     }
 
+    public function getByName($name) {
+        return Category::where("name", $name)->first();
+    }
+
     public function create($data = []) {
         return Category::create($data);
     }

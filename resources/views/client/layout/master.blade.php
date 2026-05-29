@@ -7,7 +7,7 @@
 	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
 	<!-- title -->
-	<title>Fruitkha - @yield('title')</title>
+	<title>Cake - @yield('title')</title>
 
 	@include('client.layout.partials.css')
 

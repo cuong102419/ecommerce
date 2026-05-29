@@ -33,6 +33,16 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    public function messages(): array {
+        return [
+            'email.required' => 'Email không được để trống.',
+            'email.email' => 'Email không hợp lệ.',
+            'password.required' => 'Mật khẩu không được để trống.',
+            'password.string' => 'Mật khẩu không chứa kí tự đặc biệt.',
+            'password.min' => 'Mật khẩu tối thiểu 6 kí tự.'
+        ];
+    }
+
     /**
      * Attempt to authenticate the request's credentials.
      *

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\ProductImage;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class StoreProductImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +22,18 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:categories,name,' . $this->route('category')
+            'product_id' => 'required',
+            'path' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'sort_order' => 'required'
         ];
     }
 
     public function messages(): array {
         return [
-            'name.required'=> 'Tên không được để trống.',
-            'name.string' => 'Tên không hợp lệ.',
-            'name.max' => 'Tối đa 255 kí tự.',
-            'name.unique' => 'Tên đã tồn tại, hãy chọn tên khác.'
+            'path.required' => 'Tệp không được để trống.',
+            'path.image' => 'Tệp phải là ảnh.',
+            'path.mimes' => 'Tệp phải có định dạng jpge, jpg, png, gif.',
+            'path.max' => 'Kích cỡ tệp tối đa 5MB.'
         ];
     }
 }

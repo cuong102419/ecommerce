@@ -1,4 +1,11 @@
-/*Template Name: Fruitkha - Responsive Bootstrap4 Shop TemplateTemplate URI: Description: Bootstrap template for fruits or any other kind of shopAuthor: Imran HossainAuthor URI: https://imransdesign.com/Version: 1.0*/
+/*
+Template Name: Fruitkha - Responsive Bootstrap4 Shop Template
+Template URI: 
+Description: Bootstrap template for fruits or any other kind of shop
+Author: Imran Hossain
+Author URI: https://imransdesign.com/
+Version: 1.0
+*/
 /* -----------------------------------------------------------------------------
 
 # Base - Genral & Typography
@@ -44,7 +51,7 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif; */
   font-weight: 700;
   margin: 0 0 1.25rem 0;
   color: #051922;
@@ -432,7 +439,7 @@ a.read-more-btn:hover {
   color: #F28123;
 }
 
-a.boxed-btn, a.bordered-btn, a.cart-btn {
+a.boxed-btn, a.bordered-btn, button.cart-btn {
   border-radius: 50px;
 }
 
@@ -1230,15 +1237,16 @@ div.owl-controls div.owl-nav div:hover {
   box-shadow: none;
 }
 
-a.cart-btn {
+button.cart-btn {
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
 }
 
-a.cart-btn:hover {
+button.cart-btn:hover {
   background-color: #051922;
   color: #F28123;
+  /* border: none; */
 }
 
 .recent-posts ul li {
@@ -1354,7 +1362,7 @@ a.mobile-show.search-bar-icon:hover {
 
 ----------------------------------------------------------------------------- */
 .hero-bg {
-  background-image: url(../img/hero-bg.jpg);
+  background-image: url(../img/hero-bg.png);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -2429,15 +2437,15 @@ p.product-price span {
   font-weight: 400;
 }
 
-a.cart-btn {
-  font-family: 'Poppins', sans-serif;
+button.cart-btn {
   display: inline-block;
   background-color: #F28123;
   color: #fff;
   padding: 10px 20px;
+  border: none;
 }
 
-a.cart-btn i {
+button.cart-btn i {
   margin-right: 5px;
 }
 
@@ -2482,7 +2490,7 @@ input[type="number"] {
   margin-bottom: 15px;
 }
 
-.single-product-form a.cart-btn {
+.single-product-form button.cart-btn {
   margin-bottom: 15px;
 }
 

@@ -18,9 +18,9 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($categories as $index => $category)
+                    @foreach ($categories as $key => $category)
                         <tr class="text-center">
-                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $categories->firstItem() + $key }}</td>
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->slug }}</td>
                             <td>
@@ -42,6 +42,8 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="card-body">
             {{ $categories->links() }}
         </div>
     </div>
