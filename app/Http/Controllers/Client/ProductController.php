@@ -12,7 +12,7 @@ class ProductController extends Controller
     ) {}
 
     public function index() {
-        $products = $this->productService->getAll();
+        $products = $this->productService->getActives();
         return view("client.products.list", compact("products"));
     }
 

@@ -59,7 +59,7 @@
                         <th>Giá</th>
                         <th>Số lượng</th>
                         <th>Trạng thái</th>
-                        <th>Actions</th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -101,6 +101,7 @@
                                             Xóa</a>
                                     </div>
                                 </div>
+                                
                             </td>
                         </tr>
                     @endforeach

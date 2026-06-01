@@ -12,4 +12,8 @@ class CartItem extends Model
         'session_id',
         'quantity',
     ];
+
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
 }

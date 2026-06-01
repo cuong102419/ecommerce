@@ -38,12 +38,12 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="{{ route('product.detail', $product->slug) }}"><img
-                                        src="{{ Storage::url($product->thumbnail->path) }}"
+                                        src="{{ Storage::url($product->thumbnail->path) ?? '' }}"
                                         alt=""></a>
                             </div>
                             <h3>{{ $product->name }}</h3>
                             <p class="product-price"> {{ number_format($product->price, 0, '.', '.') }}đ </p>
-                            <a href="{{ route('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                            <a href="{{ route('product.detail', $product->slug) }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
                         </div>
                     </div>
                 @endforeach

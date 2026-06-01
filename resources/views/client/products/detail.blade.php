@@ -1,5 +1,9 @@
 @extends('client.layout.master')
 
+@section('title')
+    {{ $product->name }}
+@endsection
+
 @section('content')
     <!-- breadcrumb-section -->
     <div class="breadcrumb-section breadcrumb-bg">
@@ -29,9 +33,10 @@
                         <h3>{{ $product->name }}</h3>
                         <p class="single-product-pricing">{{ number_format($product->price, 0, '.', '.') }}đ</p>
                         <div class="single-product-form">
-                            <form action="#" method="post">
+                            <form action="{{ route('cart.store') }}" method="post">
                                 @csrf
-                                <input type="number" placeholder="1" min="1">
+                                <input type="number" name="quantity" value="1" min="1" required>
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <div>
                                     <button class="cart-btn">
                                         <i class="fas fa-shopping-cart"></i>
@@ -40,15 +45,11 @@
                                 </div>
                             </form>
                             <p><strong>Danh mục: </strong>{{ $product->category->name }}</p>
-                            <p>{{ $product->description }}</p>
+                            <p>{!! $product->description !!}</p>
+                            <p>⚠️ Lưu ý Không dùng cho người dị ứng với thành phần của sản phẩm;</p>
+
+                            Không sử dụng sản phẩm khi quá hạn sử dụng</p>
                         </div>
-                        <h4>Share:</h4>
-                        <ul class="product-share">
-                            <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href=""><i class="fab fa-twitter"></i></a></li>
-                            <li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
-                            <li><a href=""><i class="fab fa-linkedin"></i></a></li>
-                        </ul>
                     </div>
                 </div>
             </div>

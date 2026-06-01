@@ -17,7 +17,8 @@ class Product extends Model
         'price',
         'stock',
         'is_active',
-        'attributes'
+        'attributes',
+        'is_active'
     ];
 
     public function getSlugOptions() : SlugOptions {

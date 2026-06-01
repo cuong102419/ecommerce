@@ -1,18 +1,23 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Client\CartController;
-use App\Http\Controllers\Client\HomeController;
-use App\Http\Controllers\Client\ProductController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductImageController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\CartItemController;
 
 Route::get('/', [HomeController::class,'index'])->name('home');
-Route::get('/cart', [CartController::class,'index'])->name('cart');
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartItemController::class,'index'])->name('cart');
+    Route::post('/store', [CartItemController::class,'store'])->name('cart.store');
+    Route::delete('/{cart}', [CartItemController::class,'delete'])->name('cart.delete');
+    Route::put('/update', [CartItemController::class,'update'])->name('cart.update');
+});
 Route::prefix('products')->group(function() {
     Route::get('/', [ProductController::class, 'index'])->name('product.list');
     Route::get('/{product}', [ProductController::class, 'detail'])->name('product.detail');
@@ -38,10 +43,12 @@ Route::middleware(['auth', 'check.role'])->prefix('admin')->group((function() {
         Route::post('/store', [AdminProductController::class,'store'])->name('admin.products.store');
         Route::get('/edit/{product}', [AdminProductController::class,'edit'])->name('admin.products.edit');
         Route::put('/update/{product}', [AdminProductController::class,'update'])->name('admin.products.update');
+        Route::put('/update-status/{product}', [AdminProductController::class,'updateStatus'])->name('admin.products.updateStatus');
 
         Route::prefix('{product}/product-images')->group((function() {
             Route::get('/create', [ProductImageController::class, 'create'])->name('product-images.create');
             Route::post('/store', [ProductImageController::class,'store'])->name('product-images.store');
+            Route::put('/update', [ProductImageController::class,'update'])->name('product-images.update');
         }));
     }));
 }));

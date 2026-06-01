@@ -46,10 +46,15 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('categories', 'product'));
     }
 
-    public function update(UpdateProductRequest $request, $product)
+    public function update(UpdateProductRequest $request, $id)
     {
-        $this->productService->update($product, $request->validated());
-        return redirect()->back();
+        $product = $this->productService->update($id, $request->validated());
+        return redirect()->route('admin.products.detail', $product->slug);
+    }
+
+    public function updateStatus($id)
+    {
+        return $this->productService->updateStatus($id);
     }
 
     public function exportTemplate(ProductTemplateExport $export) {

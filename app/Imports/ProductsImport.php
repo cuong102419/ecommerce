@@ -40,7 +40,8 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, WithMul
             'name' => $row['name'],
             'price' => $row['price'],
             'stock' => $row['stock'],
-            'description' => $row['description'] ?? null
+            'description' => $row['description'] ?? null,
+            'is_active' => 0
         ]);
     }
 

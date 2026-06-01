@@ -60,11 +60,13 @@
                             <span class="text-danger">{{ $message }}</span>
                         </div>
                     @enderror
-                    <textarea id="basic-default-message" name="description" class="form-control" rows="10"
+                    <textarea id="description" name="description" class="form-control" rows="10"
                         placeholder="Nhập mô tả sản phẩm.">{{ $product->description }}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Cập nhật</button>
             </form>
         </div>
     </div>
+    @include('admin.layout.partials.tinymce')
 @endsection
+

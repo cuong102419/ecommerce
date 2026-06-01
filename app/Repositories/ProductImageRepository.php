@@ -13,4 +13,13 @@ class ProductImageRepository
     {
         return ProductImage::create($data);
     }
+
+    public function update($productId, array $data)
+    {
+        return ProductImage::where("product_id", $productId)->update($data);
+    }
+
+    public function getByProductId($productId) {
+        return ProductImage::where("product_id", $productId)->first();
+    }
 }
