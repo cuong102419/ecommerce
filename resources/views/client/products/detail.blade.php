@@ -33,7 +33,7 @@
                         <h3>{{ $product->name }}</h3>
                         <p class="single-product-pricing">{{ number_format($product->price, 0, '.', '.') }}đ</p>
                         <div class="single-product-form">
-                            <form action="{{ route('cart.store') }}" method="post">
+                            <form class="mb-5" action="{{ route('cart.store') }}" method="post">
                                 @csrf
                                 <input type="number" name="quantity" value="1" min="1" required>
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -44,6 +44,7 @@
                                     </button>
                                 </div>
                             </form>
+                            <p><strong>Số lượng: </strong>{{ $product->stock }}</p>
                             <p><strong>Danh mục: </strong>{{ $product->category->name }}</p>
                             <p>{!! $product->description !!}</p>
                             <p>⚠️ Lưu ý Không dùng cho người dị ứng với thành phần của sản phẩm;</p>

@@ -33,7 +33,7 @@
                         <td>{{ number_format($product->price, 0, '.', '.') }}đ</td>
                     </tr>
                     <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Tổn kho</strong></td>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Tồn kho</strong></td>
                         <td>{{ $product->stock }}</td>
                     </tr>
                     <tr>

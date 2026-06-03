@@ -12,22 +12,29 @@ class ProductImageService
      */
     public function __construct(
         protected ProductImageRepository $productImageRepository,
-        protected ProductService $productService
+        protected ProductService $productService,
+        protected OrderItemService $orderItemService
     ) {}
 
-    public function create(array $data) {
+    public function create(array $data)
+    {
         if (isset($data['path'])) {
             $data['path'] = $data['path']->store('products', 'public');
         }
         return $this->productImageRepository->create($data);
     }
 
-    public function update($productId, array $data) {
+    public function update($productId, array $data)
+    {
         $product = $this->productService->getById($productId);
         $image = $this->productImageRepository->getByProductId($productId);
-        
+
         if ($image) {
-            Storage::delete($image->path);
+            $isUsed = $this->orderItemService->checkImagePath($image->path);
+
+            if (!$isUsed) {
+                Storage::delete($image->path);
+            }
         }
 
         if (isset($data['path'])) {

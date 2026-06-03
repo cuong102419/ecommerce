@@ -10,8 +10,10 @@ class Order extends Model
         'user_id',
         'status',
         'total_amount',
+        'payment_method',
         'shipping_name',
         'shipping_phone',
         'shipping_address',
+        'note'
     ];
 }

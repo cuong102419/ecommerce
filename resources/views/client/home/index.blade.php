@@ -80,7 +80,7 @@
                     <div class="col-lg-4 col-md-6 text-center">
                         <div class="single-product-item">
                             <div class="product-image">
-                                <a href="single-product.html"><img
+                                <a href="{{ route('product.detail', $product->slug) }}"><img
                                         src="{{ Storage::url($product->thumbnail->path) }}"
                                         alt=""></a>
                             </div>

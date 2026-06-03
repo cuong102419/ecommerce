@@ -1,5 +1,7 @@
 @extends('client.layout.master')
 
+@section('title', 'Sản phẩm')
+
 @section('content')
     <!-- breadcrumb-section -->
     <div class="breadcrumb-section breadcrumb-bg">

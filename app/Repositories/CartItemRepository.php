@@ -16,6 +16,10 @@ class CartItemRepository
         return CartItem::where('user_id', $userId)->get();
     }
 
+    public function findById($id){
+        return CartItem::where('id', $id)->first();
+    }
+
     public function finByProductId($cartId, $productId)
     {
         return CartItem::where('cart_id', $cartId)->where('product_id', $productId)->first();
@@ -24,6 +28,10 @@ class CartItemRepository
     public function incrementQuantity($id, $quantity)
     {
         return CartItem::where('id', $id)->increment('quantity', $quantity);
+    }
+
+    public function decrementQuantity($id, $quantity) {
+        return CartItem::where('id', $id)->decrement('quantity', $quantity);
     }
 
     public function findByUserAndProduct($userId, $productId)
@@ -47,7 +55,11 @@ class CartItemRepository
     }
     public function deleteBySession($sessionId)
     {
-        CartItem::where('session_id', $sessionId)->delete();
+        return CartItem::where('session_id', $sessionId)->delete();
+    }
+
+    public function deleteByUser($userId) {
+        return CartItem::where('user_id', $userId)->delete();
     }
 
     public function updateQuantity($id, $quantity)

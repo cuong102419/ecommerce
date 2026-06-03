@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Auth;
 class CartItemService
 {
     public function __construct(
-        protected CartItemRepository $cartItemRepository
+        protected CartItemRepository $cartItemRepository,
+        protected ProductService $productService
     ) {}
 
     public function getCartItems()
@@ -40,6 +41,12 @@ class CartItemService
         }
 
         if ($existingItem) {
+            $product = $this->productService->getById($existingItem->product_id);
+            $totalQuantity = $existingItem->quantity + $data['quantity'];
+            if($product->stock < $totalQuantity) {
+                return false;
+            }
+
             return $this->cartItemRepository->incrementQuantity($existingItem->id, $data['quantity']);
         }
 
@@ -77,8 +84,27 @@ class CartItemService
     }
 
     public function update(array $data) {
+        // dd($data);
         foreach($data['quantities'] as $id => $quantity) {
+            $cartItem = $this->cartItemRepository->findById($id);
+            $product = $this->productService->getById($cartItem->product_id);
+
+            if($quantity > $product->stock) {
+                // alert('Lỗi', 'Số lượng không đủ.', 'error');
+                return false;
+            }
             $this->cartItemRepository->updateQuantity($id, $quantity);
         }
+
+        return true;
+    }
+
+    public function deleteBySessionOrUser() {
+        if (Auth::user()) {
+            return $this->cartItemRepository->deleteByUser(Auth::id());
+        }
+        $sessionId = session()->getId();
+
+        return $this->cartItemRepository->deleteBySession($sessionId);
     }
 }

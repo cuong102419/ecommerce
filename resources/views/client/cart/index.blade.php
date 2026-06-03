@@ -43,7 +43,8 @@
                                         @foreach ($cartItems as $item)
                                             <tr class="table-body-row">
                                                 <td class="product-remove">
-                                                    <button class="btn" onclick="deleteItem({{ $item->id }})"><i
+                                                    <button type="button" class="btn"
+                                                        onclick="deleteItem({{ $item->id }})"><i
                                                             class="far fa-window-close"></i></button>
                                                 </td>
                                                 <td class="product-image"><img
@@ -52,7 +53,8 @@
                                                 <td class="product-name">{{ $item->product->name }}</td>
                                                 <td class="product-price">
                                                     {{ number_format($item->product->price, 0, '.', '.') }}đ</td>
-                                                <td class="product-quantity"><input type="number" min="1" required name="quantities[{{ $item->id }}]"
+                                                <td class="product-quantity"><input type="number" min="1" required
+                                                        name="quantities[{{ $item->id }}]"
                                                         value="{{ $item->quantity }}"></td>
                                             </tr>
                                         @endforeach
@@ -86,8 +88,9 @@
                                     </tbody>
                                 </table>
                                 <div class="cart-buttons">
-                                    <button class="btn btn-lg rounded-pill text-light" style="background-color: #F28123" type="submit">Cập nhật giỏ hàng</button>
-                                    <a href="checkout.html" class="boxed-btn black">Thanh toán</a>
+                                    <button class="btn btn-lg rounded-pill text-light" style="background-color: #F28123"
+                                        type="submit">Cập nhật giỏ hàng</button>
+                                    <a href="{{ route('orders') }}" class="boxed-btn black">Thanh toán</a>
                                 </div>
                             </div>
                         </div>

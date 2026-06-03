@@ -22,7 +22,7 @@ class ProductRepository
     }
     
     public function getHomePage() {
-        return Product::where('is_active', true)->latest()->paginate(6);
+        return Product::where('is_active', true)->limit(6)->get();
     }
 
     public function findBySlug($slug)

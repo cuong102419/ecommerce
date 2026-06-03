@@ -417,6 +417,15 @@ a.boxed-btn {
   padding: 10px 20px;
 }
 
+button.boxed-btn {
+  font-family: 'Poppins', sans-serif;
+  display: inline-block;
+  background-color: #F28123;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+}
+
 a.bordered-btn {
   font-family: 'Poppins', sans-serif;
   display: inline-block;
@@ -444,6 +453,14 @@ a.boxed-btn, a.bordered-btn, button.cart-btn {
 }
 
 a.boxed-btn, a.bordered-btn, a.cart-btn {
+  border-radius: 50px;
+}
+
+button.boxed-btn, a.bordered-btn, button.cart-btn {
+  border-radius: 50px;
+}
+
+button.boxed-btn, a.bordered-btn, a.cart-btn {
   border-radius: 50px;
 }
 
@@ -1017,6 +1034,17 @@ a.boxed-btn {
 }
 
 a.boxed-btn:hover {
+  background-color: #051922;
+  color: #F28123;
+}
+
+button.boxed-btn {
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+button.boxed-btn:hover {
   background-color: #051922;
   color: #F28123;
 }
@@ -1671,6 +1699,10 @@ p.excerpt {
 }
 
 .latest-news a.boxed-btn {
+  margin-top: 80px;
+}
+
+.latest-news button.boxed-btn {
   margin-top: 80px;
 }
 
@@ -2689,14 +2721,14 @@ tr.total-data td strong {
   padding: 20px;
 }
 
-.billing-address-form form p input {
+.billing-address-form p input {
   border: 1px solid #ddd;
   padding: 15px;
   width: 100%;
   border-radius: 3px;
 }
 
-.billing-address-form form p textarea {
+.billing-address-form p textarea {
   width: 100%;
   border-radius: 3px;
   border: 1px solid #ddd;
@@ -2721,7 +2753,7 @@ tr.total-data td strong {
   color: #F28123;
 }
 
-.billing-address-form form p:last-child {
+.billing-address-form p:last-child {
   margin-bottom: 0;
 }
 

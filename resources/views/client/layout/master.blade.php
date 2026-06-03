@@ -29,6 +29,6 @@
 	@include('client.layout.partials.footer')
 	
 	@include('client.layout.partials.js')
-
+	@include('sweetalert::alert')
 </body>
 </html>
