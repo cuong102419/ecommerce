@@ -16,6 +16,7 @@ class OrderController extends Controller
 
     public function index()
     {
+        die('xxxxxx');
         $cartItems = $this->cartItemService->getCartItems();
         $totalPrice = $this->cartItemService->getTotalPrice($cartItems);
 
@@ -24,6 +25,7 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
+        dd($request);
         try {
             $data = $request->validated();
             $order = $this->orderService->create($data);

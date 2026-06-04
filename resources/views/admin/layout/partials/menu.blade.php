@@ -68,9 +68,9 @@
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-category"></i>
-                <div data-i18n="Layouts">Danh mục</div>
+                <div data-i18n="Categories">Danh mục</div>
             </a>
-            
+
             <ul class="menu-sub">
                 <li class="menu-item">
                     <a href="{{ route('categories') }}" class="menu-link">
@@ -87,9 +87,9 @@
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-package"></i>
-                <div data-i18n="Layouts">Sản phẩm</div>
+                <div data-i18n="Products">Sản phẩm</div>
             </a>
-            
+
             <ul class="menu-sub">
                 <li class="menu-item">
                     <a href="{{ route('admin.products') }}" class="menu-link">
@@ -104,9 +104,15 @@
             </ul>
         </li>
         <li class="menu-item">
+            <a href="{{ route('admin.orders') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div data-i18n="Orders">Đơn hàng</div>
+            </a>
+        </li>
+        <li class="menu-item">
             <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                <div data-i18n="Analytics">Người dùng</div>
+                <div data-i18n="Users">Người dùng</div>
             </a>
         </li>
         <!-- Layouts -->
@@ -147,7 +153,7 @@
         <li class="menu-item">
             <a href="{{ route('home') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-log-out"></i>
-                <div data-i18n="Analytics">Về trang chủ</div>
+                <div data-i18n="Back">Về trang chủ</div>
             </a>
         </li>
     </ul>

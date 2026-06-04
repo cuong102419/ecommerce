@@ -13,7 +13,7 @@ class ProductRepository
 
     public function getById($id)
     {
-        return Product::find($id);
+        return Product::lockForUpdate()->find($id);
     }
 
     public function getActives()
@@ -47,8 +47,13 @@ class ProductRepository
 
     public function update($id, $data = [])
     {
-        $product = Product::find($id);
+        $product = $this->getById($id);
         $product->update($data);
         return $product;
     }
+
+    public function toggleActive($id, $status) {
+        $product = $this->getById($id);
+        return $product->update(['is_active' => $status]);
+    } 
 }

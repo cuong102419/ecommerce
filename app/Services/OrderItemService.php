@@ -11,7 +11,9 @@ class OrderItemService
      */
     public function __construct(
         protected OrderItemRepository $orderItemRepository,
-        protected CartItemService $cartItemService
+        protected CartItemService $cartItemService,
+        protected ProductService $productService,
+        protected OrderService $orderService
     ) {}
 
     public function create($order_id, $cartItems)
@@ -28,15 +30,26 @@ class OrderItemService
         })->toArray();
 
         foreach ($data as $item) {
+            $product = $this->productService->getById($item['product_id']);
+            if ($product->stock < $item['quantity']) {
+                throw new \RuntimeException("Sản phẩm không đủ số lượng.");
+            }
+
             $this->orderItemRepository->create($item);
+            $this->productService->decrementStock($product->id, $item['quantity']);
         }
 
-        $this->cartItemService->deleteBySessionOrUser();
+        $order = $this->orderService->findById($order_id);
+
+        if ($order->payment_method == 'cod') {
+            $this->cartItemService->deleteBySessionOrUser();
+        }
 
         return true;
     }
 
-    public function checkImagePath($imagePath) {
+    public function checkImagePath($imagePath)
+    {
         return $this->orderItemRepository->checkByImagePath($imagePath);
     }
 }

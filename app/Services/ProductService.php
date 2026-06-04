@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Imports\ProductsImport;
 use App\Repositories\ProductRepository;
+use Exception;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductService
@@ -74,6 +75,20 @@ class ProductService
         ]);
 
         return redirect()->back();
+    }
+
+    public function decrementStock($id, $quantity)
+    {
+        $product = $this->getById($id);
+        if ($product->stock < $quantity) {
+            throw new \RuntimeException("Sản phẩm không đủ số lượng.");
+        }
+        $product->decrement('stock', $quantity);
+        if ($product->stock == 0) {
+            $this->productRepository->toggleActive($product->id, false);
+        }
+
+        return true;
     }
 
     public function import($file)

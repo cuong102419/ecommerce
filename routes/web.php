@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Auth\LoginController;
@@ -26,8 +27,8 @@ Route::prefix('cart')->group(function () {
     Route::put('/update', [CartItemController::class, 'update'])->name('cart.update');
 });
 
-Route::prefix('order')->group(function () {
-    Route::get('/', [OrderController::class, 'index'])->name('orders');
+Route::prefix('order1')->group(function () {
+    Route::get('/index', [OrderController::class, 'index'])->name('orders');
     Route::post('/store', [OrderController::class,'store'])->name('orders.store');
 });
 
@@ -64,6 +65,11 @@ Route::middleware(['auth', 'check.role'])->prefix('admin')->group((function () {
             Route::put('/update', [ProductImageController::class, 'update'])->name('product-images.update');
         }));
     }));
+
+    Route::prefix('orders')->group(function() {
+        Route::get('/', [AdminOrderController::class,'index'])->name('admin.orders');
+        Route::get('/detail/{detail}', [AdminOrderController::class,'detail'])->name('admin.orders.detail');
+    });
 }));
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -71,3 +77,18 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/test-order2', function () {
+    try {
+        $service = app(\App\Services\CartItemService::class);
+        $cartItems = $service->getCartItems();
+        $totalPrice = $service->getTotalPrice($cartItems);
+        return view('client.orders.index', compact('cartItems', 'totalPrice'));
+    } catch (\Throwable $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine()
+        ]);
+    }
+});

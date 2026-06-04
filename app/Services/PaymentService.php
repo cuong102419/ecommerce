@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\PaymentRepository;
+use Illuminate\Support\Facades\DB;
 
 class PaymentService
 {
@@ -10,7 +11,9 @@ class PaymentService
      * Create a new class instance.
      */
     public function __construct(
-        protected PaymentRepository $paymentRepository
+        protected PaymentRepository $paymentRepository,
+        protected OrderService $orderService,
+        protected CartItemService $cartItemService
     ) {}
 
     public function momoPayment($order)
@@ -27,7 +30,7 @@ class PaymentService
         $extraData = '';
 
         $requestId = time() . "";
-        $requestType = "payWithATM";
+        $requestType = "payWithMethod";
         //before sign HMAC SHA256 signature
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl="
             . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl="
@@ -79,15 +82,21 @@ class PaymentService
         return $result;
     }
 
-    public function create($request) {
+    public function create($request)
+    {
         $data = [
             'order_id' => explode('_', $request['orderId'])[0],
             'provider' => 'momo',
-            'transaction_ref' => $request['partnerCode'],
+            'transaction_ref' => $request['transId'],
             'status' => $request['message'],
             'amount' => $request['amount']
         ];
 
-        return $this->paymentRepository->create($data);
+        return DB::transaction(function () use ($data){
+            $this->orderService->toggleStatus($data['order_id'], 'paid');
+            $this->cartItemService->deleteBySessionOrUser();
+
+            return $this->paymentRepository->create($data);
+        });
     }
 }
