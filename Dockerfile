@@ -34,9 +34,6 @@ WORKDIR /var/www/html
 # Điều này giúp tránh lỗi không ghi được file vào folder storage/cache
 RUN chown -R www-data:www-data /var/www/html
 
-# Switch sang user www-data để an toàn hơn (Bảo mật)
-USER www-data
-
 # Port mặc định của php-fpm là 9000
 EXPOSE 9000
 
