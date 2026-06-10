@@ -22,11 +22,23 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'email' => 'required|email',
             'shipping_name' => 'required',
             'shipping_phone' => 'required',
             'shipping_address' => 'required',
             'note' => 'nullable',
             'payment_method' => 'required'
+        ];
+    }
+
+    public function messages(): array {
+        return [
+            'email.required' => 'Email không được để trống',
+            'email.email' => 'Email không hợp lệ.',
+            'shipping_name.required' => 'Tên không được để trống.',
+            'shipping_phone.required' => 'Số điện thoại không được để trống.',
+            'shipping_address.required' => 'Địa chỉ không được để trống.',
+            'payment_method.required' => 'Chọn một phương thức.',
         ];
     }
 }

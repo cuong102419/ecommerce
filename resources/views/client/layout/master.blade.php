@@ -30,5 +30,6 @@
 	
 	@include('client.layout.partials.js')
 	@include('sweetalert::alert')
+	@include('client.layout.partials.chatbot')
 </body>
 </html>

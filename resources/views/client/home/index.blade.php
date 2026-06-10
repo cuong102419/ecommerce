@@ -81,22 +81,27 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="{{ route('product.detail', $product->slug) }}"><img
-                                        src="{{ Storage::url($product->thumbnail->path) }}"
-                                        alt=""></a>
+                                        src="{{ Storage::url($product->thumbnail->path) }}" alt=""></a>
                             </div>
                             <h3>{{ $product->name }}</h3>
                             <p class="product-price"> {{ number_format($product->price, 0, '.', '.') }}đ </p>
-                            <a href="{{ route('product.detail', $product->slug) }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                            <a href="{{ route('product.detail', $product->slug) }}" class="cart-btn"><i
+                                    class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
                         </div>
                     </div>
                 @endforeach
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <a href="{{ route('product.list') }}" class="boxed-btn">Xem thêm</a>
+                </div>
             </div>
         </div>
     </div>
     <!-- end product section -->
 
     <!-- latest news -->
-    <div class="latest-news pt-150 pb-150">
+    {{-- <div class="latest-news pt-150 pb-150">
         <div class="container">
 
             <div class="row">
@@ -171,6 +176,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- end latest news -->
 @endsection

@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Repositories\OrderItemRepository;
+use App\Repositories\OrderRepository;
+use App\Repositories\ProductRepository;
 
 class OrderItemService
 {
@@ -12,15 +14,15 @@ class OrderItemService
     public function __construct(
         protected OrderItemRepository $orderItemRepository,
         protected CartItemService $cartItemService,
-        protected ProductService $productService,
-        protected OrderService $orderService
+        protected ProductRepository $productRepository,
+        protected OrderRepository $orderRepository
     ) {}
 
-    public function create($order_id, $cartItems)
+    public function create($orderId, $cartItems)
     {
-        $data = $cartItems->map(function ($item) use ($order_id) {
+        $data = $cartItems->map(function ($item) use ($orderId) {
             return [
-                'order_id'  => $order_id,
+                'order_id'  => $orderId,
                 'product_id' => $item->product_id,
                 'product_name' => $item->product->name,
                 'product_image' => $item->product->thumbnail->path,
@@ -30,16 +32,16 @@ class OrderItemService
         })->toArray();
 
         foreach ($data as $item) {
-            $product = $this->productService->getById($item['product_id']);
+            $product = $this->productRepository->getById($item['product_id']);
             if ($product->stock < $item['quantity']) {
                 throw new \RuntimeException("Sản phẩm không đủ số lượng.");
             }
 
             $this->orderItemRepository->create($item);
-            $this->productService->decrementStock($product->id, $item['quantity']);
+            $this->productRepository->decrementStock($product->id, $item['quantity']);
         }
 
-        $order = $this->orderService->findById($order_id);
+        $order = $this->orderRepository->findById($orderId);
 
         if ($order->payment_method == 'cod') {
             $this->cartItemService->deleteBySessionOrUser();

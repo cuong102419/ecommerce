@@ -5,7 +5,7 @@
         @csrf
         <div class="mb-3">
             <label for="username" class="form-label">Họ và tên</label>
-            <input type="text" class="form-control" id="username" name="name" placeholder="Nhập họ tên của bạn"
+            <input type="text" class="form-control" id="username" name="name" value="{{ old('name') }}" placeholder="Nhập họ tên của bạn"
                 autofocus />
             @error('name')
                 <span class="text-danger">{{ $message }}</span>
@@ -13,7 +13,7 @@
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email"
+            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}"
                 placeholder="Nhập địa chỉ email của bạn" />
             @error('email')
                 <span class="text-danger">{{ $message }}</span>

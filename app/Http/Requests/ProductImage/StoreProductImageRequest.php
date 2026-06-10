@@ -23,7 +23,7 @@ class StoreProductImageRequest extends FormRequest
     {
         return [
             'product_id' => 'required',
-            'path' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'path' => 'required|file|image|mimes:jpeg,png,jpg,gif',
             'sort_order' => 'required'
         ];
     }
@@ -32,8 +32,7 @@ class StoreProductImageRequest extends FormRequest
         return [
             'path.required' => 'Tệp không được để trống.',
             'path.image' => 'Tệp phải là ảnh.',
-            'path.mimes' => 'Tệp phải có định dạng jpge, jpg, png, gif.',
-            'path.max' => 'Kích cỡ tệp tối đa 5MB.'
+            'path.mimes' => 'Tệp phải có định dạng jpge, jpg, png, gif.'
         ];
     }
 }

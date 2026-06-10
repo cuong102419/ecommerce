@@ -7,25 +7,31 @@ class OrderStatus
     public const STATUSES = [
         'pending' => [
             'label' => 'Chờ duyệt',
-            'badge' => 'bg-label-secondary'
+            'color' => 'secondary'
         ],
         'paid' => [
             'label' => 'Đã thanh toán',
-            'badge' => 'bg-label-primary'
+            'color' => 'primary'
         ],
         'processing' => [
             'label' => 'Đang xử lý',
-            'badge' => 'bg-label-waring'
+            'color' => 'warning'
         ],
         'shipped' => [
             'label' => 'Đang vận chuyển',
-            'badge' => 'bg-label-info'
+            'color' => 'info'
         ],
         'delivered' => [
             'label' => 'Đã giao',
-            'badge' => 'bg-label-success'
+            'color' => 'success'
         ],
-        // 'cancelled' => ,
-        'refunded'
+        'cancelled' => [
+            'label' => 'Hủy đơn',
+            'color' => 'danger'
+        ],
+        'refunded' => [
+            'label' => 'Hoàn tiền',
+            'color' => 'warning'
+        ]
     ];
 }

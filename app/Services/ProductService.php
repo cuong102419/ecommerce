@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Imports\ProductsImport;
+use App\Repositories\OrderItemRepository;
 use App\Repositories\ProductRepository;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductService
@@ -14,7 +16,8 @@ class ProductService
      */
     public function __construct(
         protected ProductRepository $productRepository,
-        protected CategoryService $categoryService
+        protected CategoryService $categoryService,
+        protected OrderItemRepository $orderItemRepository
     ) {}
 
     public function getAll()
@@ -27,9 +30,17 @@ class ProductService
         return $this->productRepository->getById($id);
     }
 
-    public function getActives()
+    public function getActives($request)
     {
-        return $this->productRepository->getActives();
+        $data = $request;
+        if (!empty($data['category']) && $data['category'] != 'all') {
+            $category = $this->categoryService->getBySlug($request['category']);
+            $data['category'] = $category->id;
+        } else {
+            $data['category'] = null;
+        }
+
+        return $this->productRepository->getActives($data);
     }
 
     public function getHomePage()
@@ -77,20 +88,6 @@ class ProductService
         return redirect()->back();
     }
 
-    public function decrementStock($id, $quantity)
-    {
-        $product = $this->getById($id);
-        if ($product->stock < $quantity) {
-            throw new \RuntimeException("Sản phẩm không đủ số lượng.");
-        }
-        $product->decrement('stock', $quantity);
-        if ($product->stock == 0) {
-            $this->productRepository->toggleActive($product->id, false);
-        }
-
-        return true;
-    }
-
     public function import($file)
     {
         try {
@@ -98,5 +95,15 @@ class ProductService
         } catch (\Exception $e) {
             return redirect()->back();
         }
+    }
+
+    public function delete($id) {
+        $product = $this->getById($id);
+        $isUsed = $this->orderItemRepository->checkByImagePath($product->thumbnail->path);
+        if (!$isUsed) {
+            Storage::delete($product->thumbnail->path);
+        }
+
+        return $this->productRepository->delete($product->id);
     }
 }

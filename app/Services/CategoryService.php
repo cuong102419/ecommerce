@@ -32,4 +32,8 @@ class CategoryService
     public function getByName($name) {
         return $this->categoryRepository->getByName($name);
     }
+
+    public function delete($id) {
+        return $this->categoryRepository->delete($id);
+    }
 }

@@ -35,9 +35,13 @@
                                                 href="{{ route('categories.edit', $category->slug) }}"><i
                                                     class="bx bx-edit-alt me-1"></i>
                                                 Sửa</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Delete</a>
+                                            <form action="{{ route('categories.delete', $category->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return confirm('Bạn có muốn xóa danh mục này không.')" type="submit" class="dropdown-item"><i
+                                                        class="bx bx-trash me-1"></i>
+                                                    Delete</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </td>

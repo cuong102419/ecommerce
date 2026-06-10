@@ -27,14 +27,15 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         $user = Auth::user();
-        
+
         $this->cartItemService->mergeCart($oldSessionId);
 
         if ($user->role === 'admin') {
+            alert('Thành công.', 'Đăng nhập thành công.', 'success');
             return redirect()->route('dashboard');
         }
 
-
+        alert('Thành công.', 'Đăng nhập thành công.', 'success');
         return redirect()->route('home');
     }
 
@@ -44,6 +45,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerate();
 
+        alert('Thành công.', 'Đăng xuất thành công.', 'success');
         return redirect()->route('home');
     }
 }

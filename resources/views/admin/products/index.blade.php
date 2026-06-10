@@ -86,7 +86,7 @@
                                     @if ($product->stock == 0)
                                         <span class="badge bg-label-danger">Hết hàng</span>
                                     @elseif ($product->stock <= 5)
-                                        <span class="badge bg-label-danger">Hết hàng</span>
+                                        <span class="badge bg-label-danger">Sắp hết hàng</span>
                                     @elseif ($product->stock <= 10)
                                         <span class="badge bg-label-warning">Gần hết hàng</span>
                                     @endif
@@ -109,9 +109,13 @@
                                                 href="{{ route('admin.products.edit', $product->slug) }}"><i
                                                     class="bx bx-edit-alt me-1"></i>
                                                 Sửa</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Xóa</a>
+                                            <form action="{{ route('admin.products.delete', $product->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="dropdown-item" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này.')"><i
+                                                        class="bx bx-trash me-1"></i>
+                                                    Xóa</button>
+                                            </form>
                                         </div>
                                     </div>
 

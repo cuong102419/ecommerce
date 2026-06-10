@@ -34,11 +34,8 @@
                                                 <a class="dropdown-item text-secondary" href="{{ route('dashboard') }}">Trang quản trị</a>
                                             @endif
                                             <a class="dropdown-item text-secondary" href="">Tài khoản</a>
-                                            <form action="{{ route('logout') }}" method="post">
-                                                @csrf
-                                                <button type="submit" class="dropdown-item text-secondary"
-                                                    href="">Đăng xuất</button>
-                                            </form>
+                                            <a class="dropdown-item text-secondary" href="{{ route('orders.list') }}">Đơn hàng</a>
+                                            <a class="dropdown-item text-secondary" href="{{ route('logout') }}">Đăng xuất</a>
                                         @else
                                             <a class="dropdown-item text-secondary" href="{{ route('login') }}">Đăng
                                                 nhập</a>
@@ -69,9 +66,11 @@
                 <span class="close-btn"><i class="fas fa-window-close"></i></span>
                 <div class="search-bar">
                     <div class="search-bar-tablecell">
-                        <h3>Search For:</h3>
-                        <input type="text" placeholder="Keywords">
-                        <button type="submit">Search <i class="fas fa-search"></i></button>
+                        <h3>Tìm kiếm:</h3>
+                        <form action="{{ route('product.list') }}" method="get">
+                            <input type="text" name="keyword" placeholder="Nhập tên sản phẩm">
+                            <button type="submit">Tìm <i class="fas fa-search"></i></button>
+                        </form>
                     </div>
                 </div>
             </div>

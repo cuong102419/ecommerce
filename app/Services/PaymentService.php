@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\OrderRepository;
 use App\Repositories\PaymentRepository;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,7 @@ class PaymentService
      */
     public function __construct(
         protected PaymentRepository $paymentRepository,
-        protected OrderService $orderService,
+        protected OrderRepository $orderRepository,
         protected CartItemService $cartItemService
     ) {}
 
@@ -93,7 +94,7 @@ class PaymentService
         ];
 
         return DB::transaction(function () use ($data){
-            $this->orderService->toggleStatus($data['order_id'], 'paid');
+            $this->orderRepository->toggleStatus($data['order_id'], 'paid');
             $this->cartItemService->deleteBySessionOrUser();
 
             return $this->paymentRepository->create($data);

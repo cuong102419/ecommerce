@@ -40,9 +40,30 @@
                                         data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="billing-address-form">
-                                                <p><input type="text" name="shipping_name" placeholder="Họ tên"></p>
-                                                <p><input type="text" name="shipping_address" placeholder="Địa chỉ"></p>
+                                                <p>
+                                                    <input type="text" name="email" placeholder="Email"
+                                                        value="{{ Auth::user()->email ?? '' }}">
+                                                    @error('email')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </p>
+                                                <p>
+                                                    <input type="text" name="shipping_name" placeholder="Họ tên"
+                                                        value="{{ Auth::user()->name ?? '' }}">
+                                                    @error('shipping_name')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </p>
+                                                <p>
+                                                    <input type="text" name="shipping_address" placeholder="Địa chỉ">
+                                                    @error('shipping_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </p>
                                                 <p><input type="tel" name="shipping_phone" placeholder="Số điện thoại">
+                                                    @error('shipping_phone')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </p>
                                                 <p>
                                                     <textarea name="note" id="bill" cols="30" rows="10" placeholder="Ghi chú"></textarea>
@@ -95,11 +116,13 @@
                             </table>
                             <div class="mb-4 mt-3">
                                 <div class="form-check d-flex align-items-center">
-                                    <input required name="payment_method" id="cod" type="radio" class="form-radio" value="cod">
+                                    <input required name="payment_method" id="cod" type="radio" class="form-radio"
+                                        value="cod" checked>
                                     <label class="form-check mb-0" for="cod">Thanh toán khi nhận hàng</label>
                                 </div>
                                 <div class="form-check d-flex align-items-center mt-2">
-                                    <input required name="payment_method" id="momo" type="radio" class="form-radio" value="momo">
+                                    <input required name="payment_method" id="momo" type="radio" class="form-radio"
+                                        value="momo">
                                     <label class="form-check mb-0" for="momo">Ví điện tử Momo</label>
                                 </div>
                             </div>

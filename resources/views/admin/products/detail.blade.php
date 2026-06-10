@@ -19,7 +19,7 @@
                                 <form action="{{ route('admin.products.updateStatus', $product->id) }}" method="post">
                                     @csrf
                                     @method('PUT')
-                                    <button class="btn btn-sm btn-primary">Đổi trạng thái</button>
+                                    <button class="btn btn-sm btn-primary" onclick="return confirm('Bạn có muốn đổi trạng thái.')">Đổi trạng thái</button>
                                 </form>
                             </div>
                         </td>

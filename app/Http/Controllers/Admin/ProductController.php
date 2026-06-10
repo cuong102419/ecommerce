@@ -49,11 +49,13 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, $id)
     {
         $product = $this->productService->update($id, $request->validated());
+        alert('Thành công.', 'Cập nhật sản phẩm thành công.', 'success');
         return redirect()->route('admin.products.detail', $product->slug);
     }
 
     public function updateStatus($id)
     {
+        alert('Thành công.', 'Cập nhật trạng thái thành công.', 'success');
         return $this->productService->updateStatus($id);
     }
 
@@ -64,6 +66,14 @@ class ProductController extends Controller
     public function import(ImportProductRequest $request) {
         $this->productService->import($request->file('file-import'));
 
+        alert('Thành công.', 'Import thành công.', 'success');
         return redirect()->route('admin.products');
+    }
+
+    public function delete($id) {
+        $this->productService->delete($id);
+
+        alert('Thành công.', 'Xóa sản phẩm thành công.', 'success');
+        return redirect()->back();
     }
 }

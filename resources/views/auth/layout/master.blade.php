@@ -64,5 +64,6 @@
     <!-- / Content -->
 
     @include('auth.layout.partials.js')
+    @include('sweetalert::alert')
   </body>
 </html>

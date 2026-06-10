@@ -11,9 +11,14 @@ class Order extends Model
         'status',
         'total_amount',
         'payment_method',
+        'email',
         'shipping_name',
         'shipping_phone',
         'shipping_address',
         'note'
     ];
+
+    public function orderItems() {
+        return $this->hasMany(OrderItem::class);
+    }
 }

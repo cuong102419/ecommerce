@@ -12,8 +12,10 @@
 <link rel="stylesheet" href="{{ asset('assets-admin/assets/vendor/fonts/boxicons.css') }}" />
 
 <!-- Core CSS -->
-<link rel="stylesheet" href="{{ asset('assets-admin/assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
-<link rel="stylesheet" href="{{ asset('assets-admin/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+<link rel="stylesheet" href="{{ asset('assets-admin/assets/vendor/css/core.css') }}"
+    class="template-customizer-core-css" />
+<link rel="stylesheet" href="{{ asset('assets-admin/assets/vendor/css/theme-default.css') }}"
+    class="template-customizer-theme-css" />
 <link rel="stylesheet" href="{{ asset('assets-admin/assets/css/demo.css') }}" />
 
 <!-- Vendors CSS -->
@@ -28,3 +30,6 @@
 <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 <script src="{{ asset('assets-admin/assets/js/config.js') }}"></script>
+
+<!-- sweetalert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
