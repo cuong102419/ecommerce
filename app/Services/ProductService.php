@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Services;
-
-use App\Imports\ProductsImport;
+use App\Imports\ProductsValidationImport;
+use App\Jobs\ImportProductsJob;
 use App\Repositories\OrderItemRepository;
 use App\Repositories\ProductRepository;
-use Exception;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -20,9 +19,9 @@ class ProductService
         protected OrderItemRepository $orderItemRepository
     ) {}
 
-    public function getAll()
+    public function getAll($request)
     {
-        return $this->productRepository->getAll();
+        return $this->productRepository->getAll($request);
     }
 
     public function getById($id)
@@ -81,29 +80,41 @@ class ProductService
     public function updateStatus($id)
     {
         $product = $this->getById($id);
-        $product->update([
-            'is_active' => !$product->is_active
-        ]);
-
-        return redirect()->back();
+        
+        return $this->productRepository->updateStatus($product->id, !$product->is_active);
     }
 
     public function import($file)
     {
-        try {
-            Excel::import(new ProductsImport($this->categoryService), $file);
-        } catch (\Exception $e) {
-            return redirect()->back();
-        }
+        Excel::import(new ProductsValidationImport($this->categoryService), $file);
+
+        $path = $file->store('imports', 'local');
+        ImportProductsJob::dispatch($path);
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $product = $this->getById($id);
-        $isUsed = $this->orderItemRepository->checkByImagePath($product->thumbnail->path);
-        if (!$isUsed) {
-            Storage::delete($product->thumbnail->path);
+        if ($product->thumbnail) {
+            $isUsed = $this->orderItemRepository->checkByImagePath($product->thumbnail->path);
+            if (!$isUsed) {
+                Storage::delete($product->thumbnail->path);
+            }
         }
 
         return $this->productRepository->delete($product->id);
+    }
+
+    public function massUpdateStatus($request) {
+        if ($request['action'] == 'delete') {
+            foreach($request['id-product'] as $id) {
+                $this->delete($id);
+            }
+
+            return true;
+        }
+
+        $status = $request['action'] == 'active' ? true : false;
+        return $this->productRepository->massUpdateStatus($request['id-product'], $status);
     }
 }

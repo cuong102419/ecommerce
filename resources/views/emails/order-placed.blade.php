@@ -13,7 +13,7 @@ Xin chào **{{ $order->shipping_name }}**,
 
 **Họ tên:** {{ $order->shipping_name }}<br>
 **Số điện thoại:** {{ $order->shipping_phone }}<br>
-**Email:** {{ $order->shipping_email }}<br>
+**Email:** {{ $order->email }}<br>
 **Địa chỉ:** {{ $order->shipping_address }}
 
 ---

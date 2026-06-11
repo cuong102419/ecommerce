@@ -66,4 +66,8 @@ class CartItemRepository
     {
         return CartItem::where('id', $id)->update(['quantity' => $quantity]);
     }
+
+    public function deleteGuest() {
+        return CartItem::whereNull('user_id')->where('created_at', '<', now()->subDay())->delete();
+    }
 }

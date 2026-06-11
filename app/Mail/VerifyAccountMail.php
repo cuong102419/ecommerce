@@ -2,31 +2,25 @@
 
 namespace App\Mail;
 
-use App\Models\Order;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrderPlaced extends Mailable
+class VerifyAccountMail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    /**
-     * Create a new message instance.
-     */
     public function __construct(
-        public Order $order
+        public User $user,
+        public string $verifyUrl
     ) {}
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Thông tin đơn hàng',
+            subject: 'Xác nhận tài khoản.',
         );
     }
 
@@ -36,7 +30,7 @@ class OrderPlaced extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.order-placed',
+            markdown: 'emails.verify-account',
         );
     }
 

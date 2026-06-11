@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md-5">
                     <div class="single-product-img">
-                        <img src="{{ Storage::url($product->thumbnail->path) }}" alt="">
+                        <img src="{{ Storage::url($product->thumbnail->path) ?? '' }}" alt="">
                     </div>
                 </div>
                 <div class="col-md-7">
@@ -74,12 +74,11 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="{{ route('product.detail', $product->slug) }}"><img
-                                        src="{{ Storage::url($product->thumbnail->path) }}" alt=""></a>
+                                        src="{{ Storage::url($product->thumbnail->path) ?? '' }}" alt=""></a>
                             </div>
                             <h3>{{ $product->name }}</h3>
                             <p class="product-price"> {{ number_format($product->price, 0, '.', '.') }} </p>
-                            <a href="{{ route('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to
-                                Cart</a>
+                            <a href="{{ route('cart') }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
                         </div>
                     </div>
                 @endforeach

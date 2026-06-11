@@ -32,7 +32,8 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    public function messages(): array {
+    public function messages(): array
+    {
         return [
             'email.required' => 'Email không được để trống.',
             'email.email' => 'Email không hợp lệ.',
@@ -56,6 +57,14 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'email' => 'Email hoặc mật khẩu không chính xác.',
+            ]);
+        }
+
+        if (!Auth::user()->is_verify) {
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => 'Vui lòng xác thực email trước khi đăng nhập.',
             ]);
         }
 
@@ -87,6 +96,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }

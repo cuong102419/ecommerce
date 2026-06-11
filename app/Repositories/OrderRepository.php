@@ -41,9 +41,7 @@ class OrderRepository
     }
 
     public function deleteOrder($id) {
-        $order = Order::find($id);
-
-        return $order->delete();
+        return Order::destroy($id);
     }
 
     public function getByUserId($userId) {
@@ -52,5 +50,9 @@ class OrderRepository
 
     public function findByIdAndUserId($id, $userId) {
         return Order::with('orderItems')->where('user_id', $userId)->findOrFail($id);
+    }
+
+    public function getExpiredPending() {
+        return Order::where('status', 'pending')->where('payment_method', 'momo')->get();
     }
 }

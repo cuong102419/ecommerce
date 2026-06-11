@@ -9,6 +9,8 @@ use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Services\ProductImageService;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class ProductController extends Controller
 {
@@ -16,9 +18,9 @@ class ProductController extends Controller
         protected ProductService $productService,
         protected ProductImageService $productImageService
     ) {}
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productService->getAll();
+        $products = $this->productService->getAll($request);
         return view('admin.products.index', compact('products'));
     }
     public function create()
@@ -55,25 +57,45 @@ class ProductController extends Controller
 
     public function updateStatus($id)
     {
+        $this->productService->updateStatus($id);
+
         alert('Thành công.', 'Cập nhật trạng thái thành công.', 'success');
-        return $this->productService->updateStatus($id);
+        return redirect()->back();
     }
 
-    public function exportTemplate(ProductTemplateExport $export) {
+    public function exportTemplate(ProductTemplateExport $export)
+    {
         return $export->download();
     }
 
-    public function import(ImportProductRequest $request) {
-        $this->productService->import($request->file('file-import'));
+    public function import(ImportProductRequest $request)
+    {
+        try {
+            $this->productService->import($request->file('file-import'));
 
-        alert('Thành công.', 'Import thành công.', 'success');
-        return redirect()->route('admin.products');
+            alert('Thành công.', 'Import thành công.', 'success');
+            return redirect()->route('admin.products');
+        } catch (ValidationException  $e) {
+            // $failures = $e->failures();
+            // return redirect()->back()->with('import_errors', $failures);
+
+            alert('Lỗi.', 'Import thất bại.', 'error');
+            return redirect()->route('admin.products');
+        }
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $this->productService->delete($id);
 
         alert('Thành công.', 'Xóa sản phẩm thành công.', 'success');
+        return redirect()->back();
+    }
+
+    public function updateAll(Request $request) {
+        $this->productService->massUpdateStatus($request);
+
+        alert('Thành công.', 'Cập nhật trạng thái sản phẩm thành công.', 'success');
         return redirect()->back();
     }
 }

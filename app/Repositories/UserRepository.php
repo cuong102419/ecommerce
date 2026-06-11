@@ -24,11 +24,19 @@ class UserRepository
 
     public function update($id, $data = []) {
         $user = User::findOrFail($id);
-        $user->update($data);
-        return $user;
+        return $user->update($data);
     }
 
     public function delete($id) {
         return User::destroy($id);
+    }
+
+    public function verify($token) {
+        $user = User::where('verify_token' , $token)->firstOrFail();
+
+        return $user->update([
+            'is_verify' => true,
+            'verify_token' => null
+        ]);
     }
 }

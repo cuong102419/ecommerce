@@ -6,9 +6,27 @@ use App\Models\Product;
 
 class ProductRepository
 {
-    public function getAll()
+    public function getAll($data)
     {
-        return Product::latest()->paginate(6);
+        $query = Product::query();
+        if (!empty($data['name'])) {
+            $query->where('name', 'like', '%' . $data['name'] . '%');
+        }
+
+        if (!empty($data['status'])) {
+            $query->where('is_active', $data['status'] == 'active' ? 1 : 0);
+        }
+
+        if (!empty($data['quantity'])) {
+            match ($data['quantity']) {
+                'low-stock'    => $query->where('stock', '<=', 10)->where('stock', '>', 5),
+                'almost-stock' => $query->where('stock', '<=', 5)->where('stock', '>', 0),
+                'out-of-stock' => $query->where('stock', 0),
+                default        => null
+            };
+        }
+
+        return $query->latest()->paginate(6);
     }
 
     public function getById($id)
@@ -21,10 +39,10 @@ class ProductRepository
         return Product::query()->when($data['category'], function ($query, $category_id) {
             $query->where('category_id', $category_id);
         })
-        ->when($data['keyword'], function ($query, $keyword) {
-            $query->where('name', 'like', '%' . $keyword . '%');
-        })
-        ->where('is_active', true)->latest()->paginate(9)->withQueryString();
+            ->when($data['keyword'], function ($query, $keyword) {
+                $query->where('name', 'like', '%' . $keyword . '%');
+            })
+            ->where('is_active', true)->latest()->paginate(9)->withQueryString();
     }
 
     public function getHomePage()
@@ -44,7 +62,7 @@ class ProductRepository
 
     public function getSuggest()
     {
-        return Product::latest()->paginate(3);
+        return Product::where('is_active', true)->latest()->paginate(3);
     }
 
     public function create($data = [])
@@ -89,5 +107,21 @@ class ProductRepository
         $product = $this->getById($id);
 
         return $product->delete();
+    }
+
+    public function updateStatus($id, $status)
+    {
+        $product = $this->getById($id);
+        return $product->update(['is_active' => $status]);
+    }
+
+    public function massUpdateStatus(array $ids, $status)
+    {
+        return Product::whereIn('id', $ids)
+            ->where('is_active', '!=', $status)
+            ->when($status == true, function ($query) {
+                $query->whereHas('thumbnail');
+            })
+            ->update(['is_active' => $status]);
     }
 }

@@ -47,12 +47,6 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, WithMul
 
     public function rules(): array
     {
-        return [
-            'category_name' => 'required|exists:categories,name',
-            'name' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:1',
-            'description'=> 'nullable',
-        ];
+        return [];
     }
 }

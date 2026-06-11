@@ -48,19 +48,7 @@ class OrderController extends Controller
             return redirect()->back();
         }
 
-        if ($result['skipped'] > 0 && $result['deleted'] === 0) {
-
-            alert('Cảnh báo.', "Không thể xóa {$result['skipped']} đơn vì không hợp lệ.", 'warning');
-            return redirect()->back();
-        }
-
-        if ($result['skipped'] > 0) {
-            
-            alert('Thành công.', "Đã xóa {$result['deleted']} đơn. {$result['skipped']} đơn không hợp lệ bị bỏ qua.", 'warning');
-            return redirect()->back();
-        }
-
-        alert('Thành công.', "Đã xóa {$result['deleted']} đơn hàng.", 'success');
+        alert('Thành công.', "Cập nhật đơn hàng thành công.", 'success');
         return redirect()->back();
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Jobs\SendOrderMailJob;
+use App\Jobs\SendMailJob;
+use App\Mail\OrderPlacedEmail;
 use App\Repositories\OrderItemRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
@@ -39,7 +40,7 @@ class OrderService
 
             $this->orderItemService->create($order->id, $cartItems);
 
-            SendOrderMailJob::dispatch($order->refresh()->load('orderItems'))->afterCommit();
+            SendMailJob::dispatch($order->email, new OrderPlacedEmail($order))->afterCommit();
 
             return $order->refresh();
         });
@@ -55,17 +56,49 @@ class OrderService
         return $this->orderRepository->get($data);
     }
 
+    public function restoreStock($orderId)
+    {
+        $orderItems = $this->orderItemRepository->getByOrderId($orderId);
+
+        foreach ($orderItems as $item) {
+            if ($item->product_id == null) {
+                continue;
+            }
+
+            $this->productRepository->incrementStock($item->product_id, $item->quantity);
+        }
+    }
+
     public function updateStatus($id, $data)
     {
         if ($data['action'] == 'cancelled' || $data['action'] == 'refunded') {
-            $orderItems = $this->orderItemRepository->getByOrderId($id);
-
-            foreach ($orderItems as $item) {
-                $this->productRepository->incrementStock($item->product_id, $item->quantity);
-            }
+            $this->restoreStock($id);
         }
 
         return $this->orderRepository->toggleStatus($id, $data['action']);
+    }
+
+    public function deleteOrders(array $orderIds)
+    {
+        foreach ($orderIds as $id) {
+            $order = $this->findById($id);
+            if ($order->status  === 'pending' || $order->status === 'cancelled') {
+                if (!in_array($order->status, ['pending', 'cancelled'])) continue;
+                $this->restoreStock($id);
+                $this->orderRepository->deleteOrder($order->id);
+            }
+        }
+    }
+
+    public function deleteExpired() {
+        $orders = $this->orderRepository->getExpiredPending();
+
+        foreach ($orders as $order) {
+            $this->restoreStock($order->id);
+            $this->orderRepository->deleteOrder($order->id);
+        }
+
+        return $orders->count();
     }
 
     public function updateStatusAll($data)
@@ -73,30 +106,8 @@ class OrderService
         try {
             $orderIds = $data['id'];
             if ($data['action'] === 'remove') {
-                $skipped = 0;
-                $deleted = 0;
-                foreach ($orderIds as $id) {
-                    $order = $this->findById($id);
-                    if ($order->status  === 'pending' || $order->status === 'cancelled') {
-                        $orderItems = $this->orderItemRepository->getByOrderId($id);
-
-                        foreach ($orderItems as $item) {
-                            if ($item->product_id == null) {
-                                continue;
-                            }
-
-                            $this->productRepository->incrementStock($item->product_id, $item->quantity);
-                        }
-
-                        $this->orderRepository->deleteOrder($order->id);
-                    }
-                }
-
-                return [
-                    'success' => true,
-                    'deleted' => $deleted,
-                    'skipped' => $skipped,
-                ];
+                $this->deleteOrders($data['id']);
+                return ['success' => true];
             }
 
             foreach ($orderIds as $id) {

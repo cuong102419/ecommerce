@@ -13,6 +13,7 @@ use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\ProductController;
+use App\Http\Controllers\Client\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -37,6 +38,11 @@ Route::prefix('order')->group(function () {
         Route::get('/list', [OrderController::class, 'list'])->name('orders.list');
         Route::get('/detail/{order}', [OrderController::class, 'detail'])->name('orders.detail');
     });
+});
+
+Route::middleware(['auth'])->prefix('user')->group(function() {
+    Route::get('/', [UserController::class, 'index'])->name('user');
+    Route::put('/update', [UserController::class, 'update'])->name('user.update');
 });
 
 Route::prefix('checkout')->group(function() {
@@ -67,6 +73,7 @@ Route::middleware(['auth', 'check.role'])->prefix('admin')->group((function () {
         Route::put('/update/{product}', [AdminProductController::class, 'update'])->name('admin.products.update');
         Route::put('/update-status/{product}', [AdminProductController::class, 'updateStatus'])->name('admin.products.updateStatus');
         Route::delete('/delete/{product}', [AdminProductController::class, 'delete'])->name('admin.products.delete');
+        Route::post('update-all', [AdminProductController::class, 'updateAll'])->name('admin.products.all');
 
         Route::prefix('{product}/product-images')->group((function () {
             Route::get('/create', [ProductImageController::class, 'create'])->name('product-images.create');
@@ -88,3 +95,4 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/verify/{token}', [RegisterController::class, 'verifyAccount'])->name('verifyAccount');

@@ -3,26 +3,38 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Services\UserService;
 
 class RegisterController extends Controller
 {
-    protected $userRepository;
+    public function __construct(
+        protected UserService $userService
+    ) {}
 
-    public function __construct(UserRepository $userRepository)
+    public function index()
     {
-        $this->userRepository = $userRepository;
-    }
-
-    public function index() {
         return view('auth.register.index');
     }
 
-    public function register(RegisterRequest $request) {
-        $this->userRepository->create($request->validated());
+    public function register(RegisterRequest $request)
+    {
+        $data = $request->validated();
+        $this->userService->create($data);
 
-        alert('Thành công.', 'Đăng ký thành công, hãy đăng nhập lại.', 'success');
+        alert('Thành công.', 'Đăng ký thành công, vui lòng kiểm tra email để xác thực tài khoản.', 'success');
+        return redirect()->route('login');
+    }
+
+    public function verifyAccount($token)
+    {
+        $result = $this->userService->verifyAccount($token);
+        if (!$result) {
+            alert('Lỗi', 'Không tìm thấy tài khoản.', 'error');
+            return redirect()->route('login');
+        }
+
+        alert('Thành công', 'Tài khoản đã được xác thực. Vui lòng đăng nhập lại', 'success');
         return redirect()->route('login');
     }
 }

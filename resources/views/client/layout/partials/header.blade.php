@@ -33,7 +33,7 @@
                                             @if (Auth::user()->role === 'admin')
                                                 <a class="dropdown-item text-secondary" href="{{ route('dashboard') }}">Trang quản trị</a>
                                             @endif
-                                            <a class="dropdown-item text-secondary" href="">Tài khoản</a>
+                                            <a class="dropdown-item text-secondary" href="{{ route('user') }}">Tài khoản</a>
                                             <a class="dropdown-item text-secondary" href="{{ route('orders.list') }}">Đơn hàng</a>
                                             <a class="dropdown-item text-secondary" href="{{ route('logout') }}">Đăng xuất</a>
                                         @else

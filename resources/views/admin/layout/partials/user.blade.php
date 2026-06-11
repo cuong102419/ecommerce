@@ -17,14 +17,8 @@
     <ul class="dropdown-menu dropdown-menu-end">
         <li>
             <a class="dropdown-item" href="#">
-                <i class="bx bx-user me-2"></i>
+                <i class="bx bx-user-circle me-2"></i>
                 <span class="align-middle">Thông tin cá nhân</span>
-            </a>
-        </li>
-        <li>
-            <a class="dropdown-item" href="#">
-                <i class="bx bx-cog me-2"></i>
-                <span class="align-middle">Cài đặt</span>
             </a>
         </li>
         <li>
