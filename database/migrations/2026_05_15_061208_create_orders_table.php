@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->enum('status' , ['pending', 'paid', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'])->default('pending');
             $table->decimal('total_amount', 10, 2)->default(0.00);
-            $table->enum('payment_method', ['cod', 'momo']);
+            $table->enum('payment_method', ['cod', 'momo', 'vnpay']);
             $table->string('email');
             $table->string('shipping_name');
             $table->string('shipping_phone');

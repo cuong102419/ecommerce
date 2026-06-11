@@ -80,7 +80,12 @@
                                     <td>{{ $orders->firstItem() + $key }}</td>
                                     <td>{{ $order->id }}</td>
                                     <td>{{ $order->shipping_name }}</td>
-                                    <td>{{ $order->payment_method == 'cod' ? 'Thanh toán COD' : 'Ví Momo' }}</td>
+                                    <td>{{ match ($order->payment_method) {
+                                        'cod' => 'Thanh toán COD',
+                                        'momo' => 'Ví MoMo',
+                                        'vnpay' => 'VNPAY'
+                                    } }}
+                                    </td>
                                     <td><span
                                             class="text-danger fw-bold">{{ number_format($order->total_amount, 0, '.', '.') }}đ</span>
                                     </td>

@@ -125,6 +125,11 @@
                                         value="momo">
                                     <label class="form-check mb-0" for="momo">Ví điện tử Momo</label>
                                 </div>
+                                <div class="form-check d-flex align-items-center mt-2">
+                                    <input required name="payment_method" id="vnpay" type="radio" class="form-radio"
+                                        value="vnpay">
+                                    <label class="form-check mb-0" for="vnpay">Cổng thanh toán VNPay</label>
+                                </div>
                             </div>
                             <div><button type="submit" class="boxed-btn">Thanh toán</button></div>
                         </div>

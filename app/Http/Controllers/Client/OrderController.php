@@ -36,6 +36,10 @@ class OrderController extends Controller
                 return redirect()->route('payment', $order->id);
             }
 
+            if ($order->payment_method == 'vnpay') {
+                return redirect()->route('payment.vnpay', $order->id);
+            }
+
             alert('Thành công', 'Đặt hàng thành công.', 'success');
             if (Auth::check()) {
                 return redirect()->route('orders.detail', $order->id);

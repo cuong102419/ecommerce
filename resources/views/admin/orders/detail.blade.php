@@ -26,7 +26,7 @@
                     <button type="submit" name="action" onclick="return confirm('Bạn có muốn đổi trạng thái đơn này.')"
                         value="delivered" class="btn btn-sm btn-success"><i class="bx bx-package"></i> Đã giao</button>
                 @endif
-                @if ($order->payment_method == 'momo' && $order->status == 'paid')
+                @if ($order->status == 'paid')
                     <button type="submit" name="action" onclick="return confirm('Bạn có muốn hoàn tiền đơn này.')"
                         value="refunded" class="btn btn-sm btn-warning"><i class="bx bx-transfer"></i> Hoàn tiền & hủy
                         đơn</button>
@@ -45,7 +45,12 @@
                     <tr>
                         <th>Phương thức thanh toán</th>
                         <td colspan="2">
-                            {{ $order->payment_method == 'cod' ? 'Thanh toán khi nhận hàng' : 'Ví điện tử Momo' }}</td>
+                            {{ match ($order->payment_method) {
+                                'cod' => 'Thanh toán COD',
+                                'momo' => 'Ví MoMo',
+                                'vnpay' => 'Cổng thanh toán VNPAY',
+                            } }}
+                        </td>
                     </tr>
                     <tr>
                         <th>Sản phẩm</th>

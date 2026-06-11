@@ -52,7 +52,9 @@ Route::middleware(['auth'])->group(function() {
 
 Route::prefix('checkout')->group(function() {
     Route::get('/momo/create', [PaymentController::class,'store'])->name('payment.store');
+    Route::get('/vnpay-confirm', [PaymentController::class, 'vnpayConfirm'])->name('payment.vnpay.confirm');
     Route::get('/momo/{order}', [PaymentController::class, 'index'])->name('payment');
+    Route::get('/vnpay/{order}', [PaymentController::class, 'vnpay'])->name('payment.vnpay');
 });
 
 Route::middleware(['auth', 'check.role'])->prefix('admin')->group((function () {
