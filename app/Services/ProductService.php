@@ -67,6 +67,10 @@ class ProductService
         return $this->productRepository->findBySlug($slug);
     }
 
+    public function findBySlugAdmin($slug) {
+        return $this->productRepository->findBySlugAdmin($slug);
+    }
+
     public function findByName($name)
     {
         return $this->productRepository->findByName($name);

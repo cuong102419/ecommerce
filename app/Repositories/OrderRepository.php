@@ -13,7 +13,7 @@ class OrderRepository
 
     public function findById($id)
     {
-        return Order::find($id);
+        return Order::findOrFail($id);
     }
 
     public function get($data)
@@ -33,7 +33,7 @@ class OrderRepository
 
     public function toggleStatus($id, $status)
     {
-        $order = Order::find($id);
+        $order = $this->findById($id);
 
         if($order->status != $status) {
             return $order->update(['status' => $status]);
@@ -53,6 +53,17 @@ class OrderRepository
     }
 
     public function getExpiredPending() {
-        return Order::where('status', 'pending')->where('payment_method', 'momo')->get();
+        return Order::where('status', 'pending')->where('created_at', '<', now()->subMinute(15))->get();
+    }
+
+    public function updateShippingInfo($id, $data) {
+        return Order::findOrFail($id)->update($data);
+    }
+
+    public function hasBought($userId, $productId) {
+        return Order::where('user_id', $userId)
+        ->where('status', 'delivered')
+        ->whereHas('orderItems', fn($q) => $q->where('product_id', $productId))
+        ->exists();
     }
 }

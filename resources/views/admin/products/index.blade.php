@@ -19,17 +19,17 @@
                             <label for="" class="form-label">Trạng thái</label>
                             <select name="status" id="" class="form-select form-select-sm">
                                 <option value="" selected>Tất cả</option>
-                                <option value="active">Đang hoạt động</option>
-                                <option value="deactive">Chưa hoạt động</option>
+                                <option {{ request('status') == 'active' ? 'selected' : '' }} value="active">Đang hoạt động</option>
+                                <option {{ request('status') == 'deactive' ? 'selected' : '' }} value="deactive">Chưa hoạt động</option>
                             </select>
                         </div>
                         <div class="col">
                             <label for="" class="form-label">Số lượng</label>
                             <select name="quantity" id="" class="form-select form-select-sm">
                                 <option value="" selected>Tất cả</option>
-                                <option value="low-stock">Gần hết hàng</option>
-                                <option value="almost-stock">Sắp hết hàng</option>
-                                <option value="out-of-stock">Hết hàng</option>
+                                <option {{ request('quantity') == 'low-stock' ? 'selected' : '' }} value="low-stock">Gần hết hàng</option>
+                                <option {{ request('quantity') == 'almost-stock' ? 'selected' : '' }} value="almost-stock">Sắp hết hàng</option>
+                                <option {{ request('quantity') == 'out-of-stock' ? 'selected' : '' }} value="out-of-stock">Hết hàng</option>
                             </select>
                         </div>
                     </div>

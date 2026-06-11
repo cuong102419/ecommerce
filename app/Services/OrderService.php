@@ -128,4 +128,8 @@ class OrderService
             ];
         }
     }
+
+    public function updateShippingInfo($id, $data) {
+        return $this->orderRepository->updateShippingInfo($id, $data);
+    }
 }

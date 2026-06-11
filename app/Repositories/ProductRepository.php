@@ -52,7 +52,12 @@ class ProductRepository
 
     public function findBySlug($slug)
     {
-        return Product::where('slug', $slug)->first();
+        return Product::where('slug', $slug)->where('is_active', true)->firstOrFail();
+    }
+
+    public function findBySlugAdmin($slug)
+    {
+        return Product::where('slug', $slug)->firstOrFail();
     }
 
     public function findByName($name)

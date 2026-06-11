@@ -44,7 +44,8 @@
                     </tr>
                     <tr>
                         <th>Phương thức thanh toán</th>
-                        <td colspan="2">{{ $order->payment_method == 'cod' ? 'Thanh toán khi nhận hàng' : 'Ví điện tử Momo' }}</td>
+                        <td colspan="2">
+                            {{ $order->payment_method == 'cod' ? 'Thanh toán khi nhận hàng' : 'Ví điện tử Momo' }}</td>
                     </tr>
                     <tr>
                         <th>Sản phẩm</th>
@@ -73,7 +74,8 @@
                     </tr>
                     <tr>
                         <th>Thành tiền</th>
-                        <td colspan="2"><strong class="text-danger">{{ number_format($order->total_amount) }}đ</strong></td>
+                        <td colspan="2"><strong class="text-danger">{{ number_format($order->total_amount) }}đ</strong>
+                        </td>
                     </tr>
                     <tr>
                         <th>Ngày tạo</th>
@@ -82,30 +84,50 @@
                 </table>
                 <div class="mt-5">
                     <h5>Thông tin khách hàng</h5>
-                    <form class="mt-3" action="" method="post">
+                    <form class="mt-3" action="{{ route('admin.orders.shipping', $order->id) }}" method="post">
                         @csrf
+                        @method('PUT')
                         <div>
                             <label for="">Họ tên</label>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" name="shipping_name"
                                 {{ !in_array($order->status, ['pending', 'paid']) ? 'disabled' : '' }}
                                 value="{{ $order->shipping_name }}" placeholder="Họ tên">
+                            @error('shipping_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="mt-3">
                             <label for="">Số điện thoại</label>
-                            <input type="tel" class="form-control"
+                            <input type="tel" class="form-control" name="shipping_phone"
                                 {{ !in_array($order->status, ['pending', 'paid']) ? 'disabled' : '' }}
                                 value="{{ $order->shipping_phone }}" placeholder="Số điện thoại">
+                            @error('shipping_phone')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="mt-3">
                             <label for="">Địa chỉ</label>
-                            <input type="tel" class="form-control"
+                            <input type="tel" class="form-control" name="shipping_address"
                                 {{ !in_array($order->status, ['pending', 'paid']) ? 'disabled' : '' }}
                                 value="{{ $order->shipping_address }}" placeholder="Địa chỉ">
+                            @error('shipping_address')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mt-3">
+                            <label for="">Email</label>
+                            <input type="tel" class="form-control" name="email"
+                                {{ !in_array($order->status, ['pending', 'paid']) ? 'disabled' : '' }}
+                                value="{{ $order->email }}" placeholder="Email">
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="mt-3">
                             <label for="">Ghi chú</label>
-                            <textarea class="form-control" name="" {{ !in_array($order->status, ['pending', 'paid']) ? 'disabled' : '' }}
-                                id="" placeholder="Ghi chú đơn hàng">{{ $order->note }}</textarea>
+                            <textarea name="note" class="form-control" name=""
+                                {{ !in_array($order->status, ['pending', 'paid']) ? 'disabled' : '' }} id=""
+                                placeholder="Ghi chú đơn hàng">{{ $order->note }}</textarea>
                         </div>
                         @if (in_array($order->status, ['pending', 'paid']))
                             <div class="mt-3">

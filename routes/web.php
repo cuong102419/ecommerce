@@ -13,6 +13,7 @@ use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\ProductController;
+use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\Client\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,10 @@ Route::prefix('order')->group(function () {
 Route::middleware(['auth'])->prefix('user')->group(function() {
     Route::get('/', [UserController::class, 'index'])->name('user');
     Route::put('/update', [UserController::class, 'update'])->name('user.update');
+});
+
+Route::middleware(['auth'])->group(function() {
+    Route::post('/{product}/review/store', [ReviewController::class, 'store'])->name('review.store');
 });
 
 Route::prefix('checkout')->group(function() {
@@ -84,9 +89,10 @@ Route::middleware(['auth', 'check.role'])->prefix('admin')->group((function () {
 
     Route::prefix('orders')->group(function() {
         Route::get('/', [AdminOrderController::class,'index'])->name('admin.orders');
+        Route::post('/update-all', [AdminOrderController::class, 'updateAll'])->name('admin.order.all');
         Route::get('/detail/{order}', [AdminOrderController::class,'detail'])->name('admin.orders.detail');
         Route::put('/update-status/{order}', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.status');
-        Route::post('/update-all', [AdminOrderController::class, 'updateAll'])->name('admin.order.all');
+        Route::put('/update-shipping-info/{order}', [AdminOrderController::class, 'updateShippingInfo'])->name('admin.orders.shipping');
     });
 }));
 

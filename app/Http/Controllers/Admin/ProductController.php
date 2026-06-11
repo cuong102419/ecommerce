@@ -31,7 +31,7 @@ class ProductController extends Controller
 
     public function detail($slug)
     {
-        $product = $this->productService->findBySlug($slug);
+        $product = $this->productService->findBySlugAdmin($slug);
         return view('admin.products.detail', compact('product'));
     }
 

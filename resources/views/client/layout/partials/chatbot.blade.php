@@ -1,15 +1,15 @@
 @include('client.layout.partials.chatbotcss')
 
 <button id="chatToggle" class="btn btn-info rounded-circle">
-   <i class="bx bxs-message-dots"></i>
+   <i class="fab fa-facebook-messenger"></i>
 </button>
 
 <div id="chatWidget">
     <div class="chat-header">
         <span><i class="bx bx-bot"></i> Trợ lý tư vấn</span>
         <div class="chat-actions d-flex gap-2">
-            <button onclick="clearHistory()" title="Xóa lịch sử">🗑</button>
-            <button onclick="toggleChat()" title="Đóng">✕</button>
+            <button onclick="clearHistory()" title="Xóa lịch sử"><i class="fas fa-trash"></i></button>
+            <button onclick="toggleChat()" title="Đóng" class="ml-2"><i class="fas fa-times"></i></button>
         </div>
     </div>
 
@@ -17,7 +17,7 @@
 
     <div class="chat-input-area">
         <input type="text" id="chatInput" class="form-control form-control-sm" placeholder="Nhập tin nhắn...">
-        <button onclick="sendMessage()" class="btn btn-info btn-send">Gửi</button>
+        <button onclick="sendMessage()" class="btn btn-primary btn-send">Gửi</button>
     </div>
 </div>
 
