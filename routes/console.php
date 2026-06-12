@@ -8,5 +8,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-// Schedule::command('app:delete-expired-orders')->everyThirtyMinutes();
-// Schedule::command('app:clear-guest-cart')->everyThirtyMinutes();
+Schedule::command('app:delete-expired-orders')->everyThirtyMinutes();
+Schedule::command('app:clear-guest-cart')->everyThirtyMinutes();

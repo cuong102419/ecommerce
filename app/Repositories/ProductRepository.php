@@ -42,7 +42,15 @@ class ProductRepository
             ->when($data['keyword'], function ($query, $keyword) {
                 $query->where('name', 'like', '%' . $keyword . '%');
             })
-            ->where('is_active', true)->latest()->paginate(9)->withQueryString();
+            ->where('is_active', true)->when($data['sort'] ?? null, function ($query, $sort) {
+                if ($sort === 'price-asc') {
+                    $query->orderBy('price', 'asc');
+                } elseif ($sort === 'price-desc') {
+                    $query->orderBy('price', 'desc');
+                }
+            }, function ($query) {
+                $query->latest();
+            })->paginate(9)->withQueryString();
     }
 
     public function getHomePage()

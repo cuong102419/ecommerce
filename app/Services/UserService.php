@@ -13,6 +13,10 @@ class UserService
         protected UserRepository $userRepository
     ) {}
 
+    public function getAll($request) {
+        return $this->userRepository->getAll($request);
+    }
+
     public function updateProfile($request)
     {
         return $this->userRepository->update(Auth::id(), $request);
@@ -30,5 +34,29 @@ class UserService
 
     public function verifyAccount($token) {
         return $this->userRepository->verify($token);
+    }
+
+    public function active($id) {
+        $user = $this->userRepository->findById($id);
+
+        if($user->is_verify == true) {
+            return false;
+        }
+        
+        return $this->userRepository->active($user->id);
+    }
+
+    public function activeAll($data) {
+        $userIds = $data['id-users'];
+        foreach ($userIds as $id) {
+            $user = $this->userRepository->findById($id);
+            if($user->is_verify == true) {
+                continue;
+            }
+
+            $this->userRepository->active($id);
+        }
+
+        return true;
     }
 }

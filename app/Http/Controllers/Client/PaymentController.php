@@ -62,5 +62,6 @@ class PaymentController extends Controller
             return redirect()->route('orders.detail', $request['vnp_TxnRef']);
         }
         return redirect()->route('home');
+        
     }
 }

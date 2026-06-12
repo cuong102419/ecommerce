@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Jobs\SendMailJob;
+use App\Mail\OrderDeliveredMail;
 use App\Mail\OrderPlacedEmail;
 use App\Repositories\OrderItemRepository;
 use App\Repositories\OrderRepository;
@@ -73,6 +74,11 @@ class OrderService
     {
         if ($data['action'] == 'cancelled' || $data['action'] == 'refunded') {
             $this->restoreStock($id);
+        }
+
+        if ($data['action'] == 'delivered') {
+            $order = $this->findById($id);
+            SendMailJob::dispatch($order->email, new OrderDeliveredMail($order))->afterCommit();
         }
 
         return $this->orderRepository->toggleStatus($id, $data['action']);

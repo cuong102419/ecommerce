@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductImageController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Client\CartItemController;
@@ -95,6 +96,12 @@ Route::middleware(['auth', 'check.role'])->prefix('admin')->group((function () {
         Route::get('/detail/{order}', [AdminOrderController::class,'detail'])->name('admin.orders.detail');
         Route::put('/update-status/{order}', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.status');
         Route::put('/update-shipping-info/{order}', [AdminOrderController::class, 'updateShippingInfo'])->name('admin.orders.shipping');
+    });
+
+    Route::prefix('users')->group(function() {
+        Route::get('/', [AdminUserController::class, 'index'])->name('admin.users');
+        Route::post('/active-all', [AdminUserController::class, 'activeAll'])->name('admin.users.activeAll');
+        Route::put('/active/{user}', [AdminUserController::class, 'active'])->name('admin.users.active');
     });
 }));
 

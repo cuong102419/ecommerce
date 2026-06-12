@@ -24,21 +24,31 @@
                 <div class="col-md-12">
                     <div class="product-filters">
                         <form action="{{ route('product.list') }}" method="get">
-                            <div class="d-flex justify-content-end">
-                                <div class="w-25">
-                                    <label for="" class="form-label">Danh mục</label>
-                                    <select name="category" class="form-control" id="">
-                                        <option value="all"
-                                            {{ !request('category') || request('category') == 'all' ? 'selected' : '' }}>Tất
-                                            cả
-                                        </option>
-                                        @foreach ($categories as $category)
-                                            <option {{ request('category') === $category->id ? 'selected' : '' }}
-                                                value="{{ $category->slug }}">{{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
+                            <div class="">
+                                <div class="d-flex justify-content-end">
+                                    <div class="w-25 mr-3">
+                                        <label for="" class="form-label">Giá</label>
+                                        <select name="sort" class="form-control" id="">
+                                            <option selected value="">Tất cả</option>
+                                           <option {{ request('sort') === 'price-asc' ? 'selected' : '' }} value="price-asc">Thấp đến cao</option>
+                                           <option {{ request('sort') === 'price-desc' ? 'selected' : '' }} value="price-desc">Cao đến thấp</option>
+                                        </select>
+                                    </div>
+                                    <div class="w-25">
+                                        <label for="" class="form-label">Danh mục</label>
+                                        <select name="category" class="form-control" id="">
+                                            <option value=""
+                                                {{ !request('category') == 'all' ? 'selected' : '' }}>Tất
+                                                cả
+                                            </option>
+                                            @foreach ($categories as $category)
+                                                <option {{ request('category') === $category->id ? 'selected' : '' }}
+                                                    value="{{ $category->slug }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="d-flex align-items-end ml-3">
+                                <div class="mt-3 d-flex justify-content-end">
                                     <button type="submit" class="btn cart-btn"><i class="fas fa-filter"></i> Lọc</button>
                                 </div>
                             </div>

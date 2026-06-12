@@ -53,7 +53,7 @@ class OrderRepository
     }
 
     public function getExpiredPending() {
-        return Order::where('status', 'pending')->where('created_at', '<', now()->subMinute(15))->get();
+        return Order::where('status', 'pending')->where('created_at', '<', now()->subMinute(30))->get();
     }
 
     public function updateShippingInfo($id, $data) {
