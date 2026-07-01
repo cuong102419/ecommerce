@@ -14,4 +14,8 @@ class OrderItem extends Model
         'product_image',
         'unit_price',
     ];
+
+    public function order() {
+        return $this->belongsTo(Order::class);
+    }
 }

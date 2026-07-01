@@ -25,8 +25,12 @@
                     <div class="product-filters">
                         <form action="{{ route('product.list') }}" method="get">
                             <div class="">
-                                <div class="d-flex justify-content-end">
-                                    <div class="w-25 mr-3">
+                                <div class="d-flex justify-content-between">
+                                    <div class="w-25">
+                                        <label for="" class="form-label">Tên sản phẩm</label>
+                                        <input type="text" class="form-control" name="keyword" placeholder="Nhập tên sản phẩm">
+                                    </div>
+                                    <div class="w-25">
                                         <label for="" class="form-label">Giá</label>
                                         <select name="sort" class="form-control" id="">
                                             <option selected value="">Tất cả</option>
@@ -49,7 +53,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-3 d-flex justify-content-end">
-                                    <button type="submit" class="btn cart-btn"><i class="fas fa-filter"></i> Lọc</button>
+                                    <button type="submit" class="btn cart-btn"><i class='bx bx-search-alt-2' ></i> Tìm kiếm</button>
                                 </div>
                             </div>
                         </form>

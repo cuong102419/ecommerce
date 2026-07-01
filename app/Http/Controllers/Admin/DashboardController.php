@@ -11,7 +11,20 @@ class DashboardController extends Controller
         protected DashboardService $dashboardService
     ) {}
 
-    public function index() {
-        return view("admin.dashboard.index");
+    public function index()
+    {
+        $totalProfit = $this->dashboardService->totalProfit();
+        $totalRevalue = $this->dashboardService->totalRevalue();
+        $totalPayment = $this->dashboardService->totalPayment();
+        $totalTransaction = $this->dashboardService->totalTransaction();
+        $monthlyRevenue  = $this->dashboardService->revenues();
+
+        return view("admin.dashboard.index", compact(
+            'totalProfit',
+            'totalRevalue',
+            'totalPayment',
+            'totalTransaction',
+            'monthlyRevenue'
+        ));
     }
 }

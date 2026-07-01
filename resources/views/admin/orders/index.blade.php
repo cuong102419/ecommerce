@@ -35,6 +35,7 @@
                                 nhận hàng</option>
                             <option {{ request('payment-method') == 'momo' ? 'selected' : '' }} value="momo">Ví điện tử
                                 Momo</option>
+                            <option {{ request('payment-method') == 'vnpay' ? 'selected' : '' }} value="vnpay">Cổng VNPay</option>
                         </select>
                     </div>
                 </div>
